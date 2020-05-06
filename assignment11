@@ -1,0 +1,10 @@
+import re
+hand =open('p11.txt')
+numlist=list()
+sum=0
+for line in hand:
+    num1=re.findall('([0-9]+)',line)
+    numlist=numlist+num1
+for i in numlist:
+        sum = sum+ int(i)
+print(sum)

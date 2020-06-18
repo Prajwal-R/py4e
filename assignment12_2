@@ -1,21 +1,26 @@
-from urllib.request import urlopen
+import urllib.request, urllib.parse, urllib.error
 from bs4 import BeautifulSoup
 import ssl
-sum=0
+import re
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-url = 'http://py4e-data.dr-chuck.net/comments_443951.html'
-html = urlopen(url, context=ctx).read()
-soup = BeautifulSoup(html, "html.parser")
-# Retrieve all of the span tags
-tags = soup('span')
-for lyn in tags:
-    line=lyn.decode().split('<')
-    for words in line:
-        if not words.startswith("span "): continue
-        word = words.split('>')
-        sum=sum+int(word[1])
-print(sum)
+url = 'http://py4e-data.dr-chuck.net/known_by_Simra.html'
+for i in range(7):
+    html = urllib.request.urlopen(url, context=ctx).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    tags = soup('a')
+    count = 0
+    for tag in tags:
+        count = count +1
+
+        #make it stop at position 18#
+        if count>18:
+            break
+        url = tag.get('href', None)
+lst=url.split('_')
+a=lst[2]
+lst1=a.split('.')
+print(lst1[0])
